@@ -1,0 +1,14 @@
+{
+  "mysql": {
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "123456",
+    "dialect": "mysql",
+    "database": "osam-hr"
+  },
+  "application": {
+    "port": 3000,
+    "jwtKey": "@hgWB,9UE'P`FxI%*R9N=^n]N,1A$<Lh?6v>aO|^]ukT!&C+qT{8O]~D*ewxE@q"
+  }
+}
