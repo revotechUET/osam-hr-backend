@@ -11,6 +11,12 @@ const middleWare = require('./../middlewares');
 //const UserService = require('./../../services/User.service');
 const CheckingService = require('./../../services/Checking.service');
 
+/*
+    req.body: {
+        note,
+        report
+    }
+*/
 router.post('/checkin', middleWare.authenticateRequired, (req,res)=>{
     let idUser = req.decoded.idUser;
     CheckingService.checkin(idUser, req.body.note, req.body.report)
@@ -22,6 +28,12 @@ router.post('/checkin', middleWare.authenticateRequired, (req,res)=>{
     });
 });
 
+/*
+    req.body: {
+        note,
+        report
+    }
+*/
 router.post('/checkout', middleWare.authenticateRequired, (req,res)=>{
     let idUser = req.decoded.idUser;
     CheckingService.checkout(idUser, req.body.note, req.body.report)
@@ -33,6 +45,9 @@ router.post('/checkout', middleWare.authenticateRequired, (req,res)=>{
     });
 });
 
+/*
+    NULL
+*/
 router.post('/status', middleWare.authenticateRequired, (req,res)=>{
     let idUser = req.decoded.idUser;
     CheckingService.status(idUser)
