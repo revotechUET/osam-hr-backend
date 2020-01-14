@@ -6,5 +6,8 @@ let timeZone = process.env.TIME_ZONE || (config.application || {}).timezone || "
 module.exports = {
     getCurrentTimeAsString: function() {
         return moment().tz(timeZone).format("YYYY-MM-DDThh:mm:ss");
+    },
+    isTheSameDay: function(day1, day2) {
+        return moment(day1).isSame(day2, 'day');
     }
 };

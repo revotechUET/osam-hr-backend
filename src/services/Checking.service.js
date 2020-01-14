@@ -12,23 +12,17 @@ module.exports = {
         let today = TimeService.getCurrentTimeAsString();
         return new Promise(async (resolve, reject)=>{
             //check if there is a checkin alreadytoday
-            CheckingModel.findOne({where: {
-                [Op.and]: [
-                    sequelize.where(sequelize.fn('CONVERT', 'DATE', sequelize.col('date')), "=", sequelize.fn('CONVERT', 'DATE', today)),
-                    {
-                        type: "checkin",
-                        idUser: idUser
-                    }
-                ]
+            CheckingModel.findAll({where: {
+                idUser: idUser
             }})
-            .then((rs)=>{
-                if (rs) {
-                    reject({message: "You already checking today"});
-                } else {
-                    //create a new checkin
+            .then((rs) => {
+                let nonCheckin = true;
+                for (let i = 0; i < rs.length; i++) {
+                    if (TimeService.isTheSameDay(rs[i].date, today)) nonCheckin = false;
+                }
+                if (nonCheckin) {
                     CheckingModel.create({
                         idUser: idUser,
-                        type: "checkin",
                         note: note,
                         report: report
                     })
@@ -38,6 +32,8 @@ module.exports = {
                     .catch((e)=>{
                         reject(e);
                     });
+                } else {
+                    reject({message: "You already checkin today"});
                 }
             })
             .catch((e)=>{

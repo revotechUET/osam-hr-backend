@@ -18,8 +18,10 @@ app.use(middlewares.tokenChecker);
 const PORT = process.env.APP_PORT || (config.application || {}).port || 3000;
 
 const userController = require('./src/routes/controllers/user.controller');
+const checkingController = require('./src/routes/controllers/checking.controller');
 
 app.use('/user', userController);
+app.use('/checking', checkingController);
 
 app.listen(PORT, ()=>{
     console.log('App start listening on port', PORT);
