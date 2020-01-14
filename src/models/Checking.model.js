@@ -27,5 +27,5 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: "",
             allowNull: false
         }
-    });
+    }, {timestamps: false});
 }
