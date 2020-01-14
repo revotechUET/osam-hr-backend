@@ -9,6 +9,7 @@
   },
   "application": {
     "port": 3000,
-    "jwtKey": "@hgWB,9UE'P`FxI%*R9N=^n]N,1A$<Lh?6v>aO|^]ukT!&C+qT{8O]~D*ewxE@q"
+    "jwtKey": "@hgWB,9UE'P`FxI%*R9N=^n]N,1A$<Lh?6v>aO|^]ukT!&C+qT{8O]~D*ewxE@q",
+    "timezone": "Asia/Ho_Chi_Minh"
   }
 }
