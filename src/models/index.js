@@ -1,56 +1,48 @@
+const Sequelize = require('sequelize');
 const sequelize = require('./db-connection');
-const path = require('path');
+const db = {
+  User: sequelize.import('./User.model.js'),
+  Checking: sequelize.import('./Checking.model.js'),
+  Leave: sequelize.import('./Leave.model.js'),
+  Notify: sequelize.import('./Notify.model.js'),
+  Contract: sequelize.import('./Contract.model.js'),
+  Department: sequelize.import('./Department.model.js'),
+};
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
-let models = [
-    'User',
-    'Checking',
-    'Leave',
-    'Notify',
-    'Contract',
-    'Department'
-];
 
-let exporter = {};
+// relations
+db.Checking.belongsTo(db.User, { foreignKey: "idUser" });
+db.User.hasMany(db.Checking, { foreignKey: 'idUser' });
 
-exporter.sequelize = sequelize;
+db.Leave.belongsTo(db.User, { foreignKey: 'idRequester' });
+db.User.hasMany(db.Leave, { foreignKey: 'idRequester' });
 
-models.forEach((model)=>{
-    exporter[model] = sequelize.import(path.join(__dirname, model + '.model'));
+db.Leave.belongsTo(db.User, { foreignKey: 'idApprover' });
+db.User.hasMany(db.Leave, { foreignKey: 'idApprover' });
+
+db.User.belongsToMany(db.Contract, {
+  through: 'user_contract',
+  timestamps: false,
+  foreignKey: 'idUser'
+});
+db.Contract.belongsToMany(db.User, {
+  through: 'user_contract',
+  timestamps: false,
+  foreignKey: 'idContract'
 });
 
-((m)=>{
-    
-    m.Checking.belongsTo(m.User, {foreignKey: "idUser"});
-    m.User.hasMany(m.Checking, {foreignKey: 'idUser'});
-    
-    m.Leave.belongsTo(m.User, {foreignKey: 'idRequester'});
-    m.User.hasMany(m.Leave, {foreignKey: 'idRequester'});
+db.User.belongsToMany(db.Department, {
+  through: 'user_department',
+  timestamps: false,
+  foreignKey: 'idUser'
+});
+db.Department.belongsToMany(db.User, {
+  through: 'user_department',
+  timestamps: false,
+  foreignKey: 'idDepartment'
+});
 
-    m.Leave.belongsTo(m.User, {foreignKey: 'idApprover'});
-    m.User.hasMany(m.Leave, {foreignKey: 'idApprover'});
 
-    m.User.belongsToMany(m.Contract, {
-        through: 'user_contract',
-        timestamps: false,
-        foreignKey: 'idUser'
-    });
-    m.Contract.belongsToMany(m.User, {
-        through: 'user_contract',
-        timestamps: false,
-        foreignKey: 'idContract'
-    });
-
-    m.User.belongsToMany(m.Department, {
-        through: 'user_department',
-        timestamps: false,
-        foreignKey: 'idUser'
-    });
-    m.Department.belongsToMany(m.User, {
-        through: 'user_department',
-        timestamps: false,
-        foreignKey: 'idDepartment'
-    });
-    
-})(exporter);
-
-module.exports = exporter;
+module.exports = db;

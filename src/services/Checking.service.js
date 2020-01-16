@@ -10,7 +10,7 @@ const TimeService = require('./Time.service');
 module.exports = {
     checkin: function (idUser, note, report) {
         let today = TimeService.getCurrentTimeAsString();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //check if there is a checkin alreadytoday
             CheckingModel.findAll({
                 where: {
@@ -47,7 +47,7 @@ module.exports = {
     },
     checkout: function (idUser, note, report) {
         let today = TimeService.getCurrentTimeAsString();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //check if there is a checkin alreadytoday
             CheckingModel.findAll({
                 where: {
@@ -91,7 +91,7 @@ module.exports = {
     },
     status: function (idUser) {
         let today = TimeService.getCurrentTimeAsString();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             CheckingModel.findAll({
                 where: {
                     idUser: idUser
