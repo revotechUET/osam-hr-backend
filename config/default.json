@@ -2,7 +2,7 @@
   "mysql": {
     "host": "localhost",
     "port": 3306,
-    "username": "osam-hr",
+    "username": "root",
     "password": "123456",
     "dialect": "mysql",
     "database": "osam-hr"
