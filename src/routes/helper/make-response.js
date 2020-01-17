@@ -1,3 +1,4 @@
-module.exports = function makeResponse(res, payload) {
-    return res.status(payload.code).json(payload);
+module.exports = function makeResponse(res, { code, reason, content }) {
+  res.statusMessage = reason;
+  return res.status(code).json(content);
 }

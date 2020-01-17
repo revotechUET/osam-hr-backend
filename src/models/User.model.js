@@ -9,14 +9,15 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('users', {
-    idUser: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+    idGoogle: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
     },
     email: {
       type: Sequelize.DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     role: {
       type: DataTypes.ENUM('admin', 'manager', 'user'),

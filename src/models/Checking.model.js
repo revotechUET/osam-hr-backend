@@ -2,11 +2,6 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('checkings', {
-    idChecking: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
     date: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,

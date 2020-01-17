@@ -2,11 +2,6 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('leaves', {
-    idLeave: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
     startTime: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,

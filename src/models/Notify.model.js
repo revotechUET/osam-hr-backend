@@ -2,11 +2,6 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('notifies', {
-    idNotify: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
     title: {
       type: DataTypes.STRING,
       allowNull: false

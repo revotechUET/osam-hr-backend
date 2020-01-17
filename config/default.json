@@ -11,5 +11,18 @@
     "port": 3000,
     "jwtKey": "@hgWB,9UE'P`FxI%*R9N=^n]N,1A$<Lh?6v>aO|^]ukT!&C+qT{8O]~D*ewxE@q",
     "timezone": "Asia/Ho_Chi_Minh"
+  },
+  "google_credentials": {
+    "client_id": "909603359091-867op848f6mob3adp4pask1apok24rej.apps.googleusercontent.com",
+    "project_id": "testgsuite-262402",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "CohotSB0SvP8sZsIlnrIvTyT",
+    "redirect_uris": [
+      "http://localhost:3000/google-auth-cb",
+      "https://testgsuite-262402.firebaseapp.com/__/auth/handler",
+      "http://localhost"
+    ]
   }
 }

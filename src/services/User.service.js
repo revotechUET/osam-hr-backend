@@ -1,30 +1,24 @@
-const models = require('../models');
-let UserModel = models.User;
-
-const md5 = require('md5');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-
-let jwtKey = process.env.JWT_KEY || (config.application || {}).jwtKey || "jwtKey";
-
-function createUser(info) {
-  if (info.password) info.password = md5(info.password);
-  return UserModel.create(info).then((result) => { result.password = null; return result; });
-}
+const { google } = require('googleapis');
+const { User } = require('../models');
 
 module.exports = {
-  verifyLogin: async function (info) {
-    if (info.password) info.password = md5(info.password);
-    let userInfo = await UserModel.findOne({ where: { username: info.username } });
-    if (userInfo) {
-      if (info.password == userInfo.password) {
-        let token = jwt.sign({ idUser: userInfo.idUser, role: userInfo.role, username: userInfo.username }, jwtKey);
-        return token;
-      } else {
-        throw { message: "Password is not match" };
+  verifyGoogleIdToken: async function ({ idToken, clientId }) {
+    const client = new google.auth.OAuth2(clientId);
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: clientId,
+    });
+    const payload = ticket.getPayload();
+    const existedUser = await User.findOne({ where: { email: payload.email } });
+    if (existedUser) return existedUser;
+    const { data: googleUser } = await google.admin('directory_v1').users.get({ userKey: payload.email });
+    const user = await User.create(
+      {
+        email: payload.email,
+        idGoogle: googleUser.id,
+        role: googleUser.isAdmin ? 'admin' : 'user',
       }
-    } else {
-      throw { message: "User not exist" };
-    }
-  },
+    )
+    return user;
+  }
 }
