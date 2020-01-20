@@ -8,19 +8,19 @@ const makeResponse = require('./../helper/make-response');
 
 const middleWare = require('./../middlewares');
 
-router.post('/send', middleWare.authenticateRequired ,(req, res)=>{
+router.post('/add', middleWare.authenticateRequired, (req, res) => {
 
 });
 
-router.post('/get', middleWare.authenticateRequired ,(req, res)=>{
+router.post('/get', middleWare.authenticateRequired, (req, res) => {
 
 });
 
-router.post('/approve', middleWare.authenticateRequired, middleWare.roleAtLeastOne, (req, res)=>{
+router.post('/approve', middleWare.authenticateRequired, middleWare.requireManager, (req, res) => {
 
 });
 
-router.post('/list', middleWare.authenticateRequired, middleWare.roleAtLeastOne, (req, res)=>{
+router.post('/list', middleWare.authenticateRequired, middleWare.requireManager, (req, res) => {
 
 });
 

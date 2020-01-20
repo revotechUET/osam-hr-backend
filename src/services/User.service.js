@@ -1,5 +1,13 @@
 const { google } = require('googleapis');
 const { User } = require('../models');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+
+const jwtKey = process.env.JWT_KEY || (config.application || {}).jwtKey || "jwtKey";
+
+function genToken(user) {
+  return jwt.sign({ id: user.id, idGoogle: user.idGoogle, email: user.email, role: user.role }, jwtKey);
+}
 
 module.exports = {
   verifyGoogleIdToken: async function ({ idToken, clientId }) {
@@ -10,7 +18,7 @@ module.exports = {
     });
     const payload = ticket.getPayload();
     const existedUser = await User.findOne({ where: { email: payload.email } });
-    if (existedUser) return existedUser;
+    if (existedUser) return genToken(existedUser);
     const { data: googleUser } = await google.admin('directory_v1').users.get({ userKey: payload.email });
     const user = await User.create(
       {
@@ -19,6 +27,6 @@ module.exports = {
         role: googleUser.isAdmin ? 'admin' : 'user',
       }
     )
-    return user;
+    return genToken(user);
   }
 }

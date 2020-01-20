@@ -20,9 +20,11 @@ const PORT = process.env.APP_PORT || (config.application || {}).port || 3000;
 
 const userController = require('./src/routes/controllers/user.controller');
 const checkingController = require('./src/routes/controllers/checking.controller');
+const leaveController = require('./src/routes/controllers/leave.controller');
 
 app.use('/user', userController);
 app.use('/checking', checkingController);
+app.use('/leave', leaveController);
 app.get('/google-auth-cb', (req, res) => {
   const { code } = req.query;
   googleauth.getToken(code);
