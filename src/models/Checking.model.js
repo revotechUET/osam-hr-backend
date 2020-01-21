@@ -21,12 +21,12 @@ module.exports = (sequelize, DataTypes) => {
     //   defaultValue: 'checkin',
     //   allowNull: false
     // },
-    note: {
+    reportContent: {
       type: DataTypes.STRING,
       defaultValue: "",
       allowNull: false
     },
-    report: {
+    responseContent: {
       type: DataTypes.STRING,
       defaultValue: "",
       allowNull: false

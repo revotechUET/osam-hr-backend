@@ -18,14 +18,6 @@ const CheckingService = require('./../../services/Checking.service');
     }
 */
 router.post('/checkin', middleWare.authenticateRequired, (req, res) => {
-  // let id = req.user.id;
-  // CheckingService.checkin(id, req.body.note, req.body.report)
-  //   .then((rs) => {
-  //     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
-  //   })
-  //   .catch(e => {
-  //     makeResponse(res, jsonResponse(CODE.GENERIC_ERROR, e.message, {}));
-  //   });
   CheckingService.checkin({ user: req.user }).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {
@@ -71,5 +63,13 @@ router.post('/list', middleWare.authenticateRequired, (req, res) => {
     makeResponse(res, jsonResponse(CODE.GENERIC_ERROR, err.message, {}));
   })
 })
+
+router.post('/report', middleWare.authenticateRequired, (req, res) => {
+  CheckingService.report({ user: req.user, options: req.body }).then(rs => {
+    makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
+  }).catch(err => {
+    makeResponse(res, jsonResponse(CODE.GENERIC_ERROR, err.message, {}));
+  })
+});
 
 module.exports = router;

@@ -59,8 +59,8 @@ router.post('/delete', middleWare.authenticateRequired, middleWare.requireManage
   })
 });
 
-router.post('/cancel', middleWare.authenticateRequired, middleWare.requireManager, (req, res) => {
-  LeaveService.cancel({user: req.user, options: req.body}).then(rs => {
+router.post('/reject', middleWare.authenticateRequired, middleWare.requireManager, (req, res) => {
+  LeaveService.reject({user: req.user, options: req.body}).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {
     makeResponse(res, jsonResponse(CODE.GENERIC_ERROR, err.message, {}));

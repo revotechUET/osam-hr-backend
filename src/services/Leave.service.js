@@ -44,7 +44,7 @@ module.exports = {
       LeaveModel.findAll({where: options}).then(resolve);
     })
   },
-  cancel: function (data) {
+  reject: function (data) {
     return new Promise((resolve, reject) => {
       LeaveModel.findByPk(data.options.id).then(lm => {
         if (lm) {

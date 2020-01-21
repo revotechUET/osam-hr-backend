@@ -22,7 +22,8 @@ let createMiddleware = function (validateFn, rejectResponse) {
 module.exports.createMiddleware = createMiddleware;
 
 module.exports.tokenChecker = function (req, res, next) {
-  const token = req.headers['Authorization'] || req.headers['authorization'] || req.body.token || req.query.token || req.headers['x-access-token'];
+  let token = req.headers['Authorization'] || req.headers['authorization'] || req.body.token || req.query.token || req.headers['x-access-token'];
+  token = token.replace('Bearer ', '');
   req.user = null;
   if (token) {
     try {

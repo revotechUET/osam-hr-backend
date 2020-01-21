@@ -5,7 +5,3 @@ module.exports = function response(code, reason, payload) {
         content: payload
     };
 }
-
-// export function makeResponse(res, payload) {
-//     return res.status(payload.code).json(payload);
-// }

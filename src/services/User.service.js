@@ -28,5 +28,8 @@ module.exports = {
       }
     )
     return genToken(user);
+  },
+  userInfo: async function ({ user }) {
+    return User.findByPk(user.id);
   }
 }
