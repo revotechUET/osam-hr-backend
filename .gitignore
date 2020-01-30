@@ -4,3 +4,4 @@ package-lock.json
 *.xlsx
 config/*local.*
 token.json
+.idea
