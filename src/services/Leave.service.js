@@ -16,7 +16,7 @@ module.exports = {
   },
   get: function (data) {
     return new Promise((resolve, reject) => {
-      LeaveModel.findByPk(data.options.id).then(lm => {
+      LeaveModel.findOne({ where: { id: data.options.id, idRequester: data.user.id } }).then(lm => {
         if (lm) {
           resolve(lm);
         } else {
@@ -29,7 +29,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       LeaveModel.findByPk(data.options.id).then(lm => {
         if (lm) {
-          lm.status = 'accepted';
+          lm.status = 'approved';
           lm.idApprover = data.user.id;
           lm.save().then(resolve).catch(reject);
         } else {

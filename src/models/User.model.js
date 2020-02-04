@@ -23,7 +23,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('admin', 'manager', 'user'),
       defaultValue: 'user',
       allowNull: false
-    }
+    },
+    name: {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: false,
+    },
+    active: {
+      type: Sequelize.DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   });
   return User;
 }

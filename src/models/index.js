@@ -22,16 +22,8 @@ db.User.hasMany(db.Leave, { foreignKey: 'idRequester' });
 db.Leave.belongsTo(db.User, { foreignKey: 'idApprover' });
 db.User.hasMany(db.Leave, { foreignKey: 'idApprover' });
 
-db.User.belongsToMany(db.Contract, {
-  through: 'user_contract',
-  timestamps: false,
-  foreignKey: 'idUser'
-});
-db.Contract.belongsToMany(db.User, {
-  through: 'user_contract',
-  timestamps: false,
-  foreignKey: 'idContract'
-});
+db.User.belongsTo(db.Contract, { foreignKey: 'idContract' });
+db.Contract.hasMany(db.User, { foreignKey: 'idContract' });
 
 db.User.belongsToMany(db.Department, {
   through: 'user_department',

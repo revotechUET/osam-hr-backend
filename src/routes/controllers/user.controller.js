@@ -19,9 +19,19 @@ router.post('/verifyIdToken', async (req, res) => {
   }
 });
 
-router.post('/info', middleWare.authenticateRequired, async (req, res) => {
+router.post('/info', middleWare.userRequired, async (req, res) => {
   try {
     const user = await UserService.userInfo(req);
+    makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], user));
+  } catch (error) {
+    makeResponse(res, jsonResponse(CODE.GENERIC_ERROR, error.message, {}));
+  }
+
+})
+
+router.post('/list', middleWare.managerRequired, async (req, res) => {
+  try {
+    const user = await UserService.listUser(req.body);
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], user));
   } catch (error) {
     makeResponse(res, jsonResponse(CODE.GENERIC_ERROR, error.message, {}));

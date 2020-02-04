@@ -17,7 +17,7 @@ const CheckingService = require('./../../services/Checking.service');
         report
     }
 */
-router.post('/checkin', middleWare.authenticateRequired, (req, res) => {
+router.post('/checkin', middleWare.userRequired, (req, res) => {
   CheckingService.checkin({ user: req.user }).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {
@@ -31,7 +31,7 @@ router.post('/checkin', middleWare.authenticateRequired, (req, res) => {
         report
     }
 */
-router.post('/checkout', middleWare.authenticateRequired, (req, res) => {
+router.post('/checkout', middleWare.userRequired, (req, res) => {
   let id = req.user.id;
   CheckingService.checkout({user: req.user})
     .then((rs) => {
@@ -45,7 +45,7 @@ router.post('/checkout', middleWare.authenticateRequired, (req, res) => {
 /*
     NULL
 */
-router.post('/status', middleWare.authenticateRequired, (req, res) => {
+router.post('/status', middleWare.userRequired, (req, res) => {
   CheckingService.status({ user: req.user })
     .then((rs) => {
       makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
@@ -56,7 +56,7 @@ router.post('/status', middleWare.authenticateRequired, (req, res) => {
 });
 
 
-router.post('/list', middleWare.authenticateRequired, (req, res) => {
+router.post('/list', middleWare.userRequired, (req, res) => {
   CheckingService.list({ user: req.user, options: req.body }).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {
@@ -64,7 +64,7 @@ router.post('/list', middleWare.authenticateRequired, (req, res) => {
   })
 })
 
-router.post('/report', middleWare.authenticateRequired, (req, res) => {
+router.post('/report', middleWare.userRequired, (req, res) => {
   CheckingService.report({ user: req.user, options: req.body }).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {

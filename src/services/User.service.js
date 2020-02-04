@@ -1,5 +1,5 @@
 const { google } = require('googleapis');
-const { User } = require('../models');
+const { User, Department, Contract } = require('../models');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
@@ -25,11 +25,15 @@ module.exports = {
         email: payload.email,
         idGoogle: googleUser.id,
         role: googleUser.isAdmin ? 'admin' : 'user',
+        name: googleUser.name.fullName,
       }
     )
     return genToken(user);
   },
   userInfo: async function ({ user }) {
     return User.findByPk(user.id);
+  },
+  listUser: async function ({limit, offset}) {
+    return User.findAll({ limit, offset, include: [Department, Contract] });
   }
 }

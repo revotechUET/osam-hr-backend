@@ -36,19 +36,19 @@ module.exports.tokenChecker = function (req, res, next) {
 };
 
 //login required
-module.exports.authenticateRequired = createMiddleware((req) => {
+module.exports.userRequired = createMiddleware((req) => {
   if (req.user) return true;
   return false;
 }, jsonResponse(CODE.UNAUTHORIZED, CODE[CODE.UNAUTHORIZED], {}));
 
 
 //role <= 1 required
-module.exports.requireManager = createMiddleware((req) => {
+module.exports.managerRequired = createMiddleware((req) => {
   if (req.user.role === 'user') return false;
   return true;
 });
 
-module.exports.onlySystemAdmin = createMiddleware((req) => {
+module.exports.adminRequired = createMiddleware((req) => {
   if (req.user.role === 'admin') return true;
   return false;
 }, jsonResponse(CODE.FORBIDDEN, "You have no permission. System admin access only", {}));

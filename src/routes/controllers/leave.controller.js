@@ -9,7 +9,7 @@ const makeResponse = require('./../helper/make-response');
 const middleWare = require('./../middlewares');
 const LeaveService = require('../../services/Leave.service');
 
-router.post('/add', middleWare.authenticateRequired, (req, res) => {
+router.post('/add', middleWare.userRequired, (req, res) => {
   LeaveService.add({user: req.user, options: req.body}).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {
@@ -17,7 +17,7 @@ router.post('/add', middleWare.authenticateRequired, (req, res) => {
   })
 });
 
-router.post('/get', middleWare.authenticateRequired, (req, res) => {
+router.post('/get', middleWare.userRequired, (req, res) => {
   LeaveService.get({user: req.user, options: req.body}).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {
@@ -25,7 +25,7 @@ router.post('/get', middleWare.authenticateRequired, (req, res) => {
   })
 });
 
-router.post('/approve', middleWare.authenticateRequired, middleWare.requireManager, (req, res) => {
+router.post('/approve', middleWare.userRequired, middleWare.managerRequired, (req, res) => {
   LeaveService.approve({user: req.user, options: req.body}).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {
@@ -33,7 +33,7 @@ router.post('/approve', middleWare.authenticateRequired, middleWare.requireManag
   })
 });
 
-router.post('/list-by-user', middleWare.authenticateRequired, (req, res) => {
+router.post('/list-by-user', middleWare.userRequired, (req, res) => {
   req.body.getAll = false;
   LeaveService.list({user: req.user, options: req.body}).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
@@ -42,7 +42,7 @@ router.post('/list-by-user', middleWare.authenticateRequired, (req, res) => {
   })
 });
 
-router.post('/list', middleWare.authenticateRequired, middleWare.requireManager, (req, res) => {
+router.post('/list', middleWare.userRequired, middleWare.managerRequired, (req, res) => {
   req.body.getAll = true;
   LeaveService.list({user: req.user, options: req.body}).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
@@ -51,7 +51,7 @@ router.post('/list', middleWare.authenticateRequired, middleWare.requireManager,
   })
 });
 
-router.post('/delete', middleWare.authenticateRequired, middleWare.requireManager, (req, res) => {
+router.post('/delete', middleWare.userRequired, middleWare.managerRequired, (req, res) => {
   LeaveService.delete({user: req.user, options: req.body}).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {
@@ -59,7 +59,7 @@ router.post('/delete', middleWare.authenticateRequired, middleWare.requireManage
   })
 });
 
-router.post('/reject', middleWare.authenticateRequired, middleWare.requireManager, (req, res) => {
+router.post('/reject', middleWare.userRequired, middleWare.managerRequired, (req, res) => {
   LeaveService.reject({user: req.user, options: req.body}).then(rs => {
     makeResponse(res, jsonResponse(CODE.SUCCESS, CODE[CODE.SUCCESS], rs));
   }).catch(err => {

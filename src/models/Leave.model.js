@@ -13,8 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     reason: {
-      type: DataTypes.STRING,
-      defaultValue: "",
+      // 0: Ly do ca nhan
+      // 1: Di cong vu
+      // 2: Di cong tac
+      type: DataTypes.ENUM('0', '1', '2'),
+      defaultValue: '0',
       allowNull: false
     },
     description: {
@@ -23,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     status: {
-      type: DataTypes.ENUM('waiting', 'accepted', 'rejected', 'expired'),
+      type: DataTypes.ENUM('waiting', 'approved', 'rejected', 'expired'),
       defaultValue: 'waiting',
       allowNull: false
     }
